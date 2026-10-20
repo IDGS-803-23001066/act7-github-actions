@@ -10,7 +10,7 @@ def validar_descuento(descuento):
 def calcular_precio(precio, descuento):
     validar_descuento(descuento)
     total = precio - (precio * descuento / 100)
-    return total
+    return total 
 
 def calcular_peso_envio(peso_unitario, cantidad, peso_empaque=0.5):
     if peso_unitario <= 0 or cantidad <= 0:
