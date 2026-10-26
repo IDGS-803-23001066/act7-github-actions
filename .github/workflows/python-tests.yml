@@ -2,7 +2,7 @@ name: Python Flask Tests
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "feature/**", "develop/**" ]
   pull_request:
     branches: [ "main" ]
 
@@ -24,6 +24,11 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    - name: Ejecutar pruebas con pytest
-      run: |
-        pytest
+    - name: Ejecutar pruebas unitarias
+      run: python -m pytest test_app.py -v
+
+    - name: Ejecutar pruebas integracion
+      run: python -m pytest test_main.py -v
+
+    - name: Ejecutar pruebas sistema
+      run: python -m pytest test_system.py -v
