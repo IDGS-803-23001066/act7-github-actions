@@ -9,13 +9,23 @@ def validar_descuento(descuento):
 
 def calcular_precio(precio, descuento):
     validar_descuento(descuento)
-    total = precio - (precio * descuento / 100)
-    return total 
+    if descuento == 0:
+        return float(precio)
+    if descuento == 100:
+        return 0.0
+    return precio - (precio * descuento / 100)
 
 def calcular_peso_envio(peso_unitario, cantidad, peso_empaque=0.5):
     if peso_unitario <= 0 or cantidad <= 0:
         raise ValueError("El peso unitario y la cantidad deben ser mayores a 0")
     return (peso_unitario * cantidad) + peso_empaque
+
+def calcular_envio(subtotal):
+    if subtotal < 0:
+        raise ValueError("Subtotal invalido")
+    if subtotal >= 500:
+        return 0
+    return 80
 
 @app.route('/calcular-precio', methods=['POST'])
 def api_calcular_precio():
@@ -39,6 +49,8 @@ def api_calcular_peso():
         return jsonify({"peso_total": total_peso}), 200
     except (ValueError, TypeError) as e:
         return jsonify({"error": str(e)}), 400
+
+    
 
 if __name__ == '__main__':
     app.run(debug=True)
